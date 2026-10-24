@@ -1,0 +1,20 @@
+@mixin flex($flow, $wrap, $aling, $justify, $gap){
+    display: flex;
+    flex-flow: $flow;
+    align-items: $aling;
+    justify-content: $justify;
+    gap: $gap;
+    flex-wrap: $wrap;
+}
+
+@mixin textos($tamanho, $peso, $altura, $cor-texto){
+    font-size: $tamanho;
+    font-weight: $peso;
+    line-height: $altura;
+    color: $cor-texto;
+}
+
+@mixin hw($altura, $largura){
+    width: $largura;
+    height: $altura;
+}

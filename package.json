@@ -1,0 +1,21 @@
+{
+  "name": "ambmao",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "sass": "sass src/scss/main.scss src/css/style.css",
+    "sass:watch": "sass --watch src/scss/main.scss src/css/style.css",
+    "export:spring": "npm run sass && node scripts/exportar-spring.mjs",
+    "backend:prepare": "npm run sass && node scripts/exportar-spring.mjs --backend",
+    "backend:run": "npm run backend:prepare && cd backend && mvn spring-boot:run",
+    "backend:test": "npm run backend:prepare && mvn -f backend/pom.xml test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sass": "^1.106.1"
+  }
+}

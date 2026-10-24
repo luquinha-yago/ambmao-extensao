@@ -1,0 +1,70 @@
+// Reset geral
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+// HTML
+html {
+    scroll-behavior: smooth;
+    font-size: 62.5%;
+}
+
+// Corpo da página
+body {
+    min-height: 100vh;
+}
+
+// Listas
+ul,
+ol {
+    list-style: none;
+}
+
+// Links
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+// Imagens e mídias
+img,
+picture,
+video,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+// Formulários
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+// Botões
+button {
+    cursor: pointer;
+}
+
+// Campos de texto
+textarea {
+    resize: vertical;
+}
+
+// Tabelas
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+// Acessibilidade
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cartilhas educativas sobre condições das mãos e punhos: o que são, sinais, sintomas e orientações para o dia a dia.">
+    <meta name="theme-color" content="#233d89">
+    <link rel="icon" href="./assets/icons/icone_mao.svg" th:href="@{/assets/icons/icone_mao.svg}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css" th:href="@{/css/style.css}">
+    <script src="./js/main.js" th:src="@{/js/main.js}" defer></script>
+    <title>Cartilhas | AmbMão</title>
+    <script src="./js/cartilhas-dados.js" th:remove="all" defer></script>
+    <script src="./js/cartilhas-utils.js" th:src="@{/js/cartilhas-utils.js}" defer></script>
+    <script src="./js/cartilhas.js" th:src="@{/js/cartilhas.js}" defer></script>
+</head>
+<body class="pagina-interna" data-preview="true" th:attr="data-preview=${false}">
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+    <header class="cabecalho">
+        <div class="cabecalho__interior">
+            <a class="cabecalho__titulo-principal" href="./index.html#inicio" th:href="@{/}" aria-label="AmbMão — início">
+                <img src="./assets/icons/icone_mao.svg" th:src="@{/assets/icons/icone_mao.svg}" alt="" width="30" height="23">
+                <span>AmbMão</span>
+            </a>
+            <button class="cabecalho__menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal" hidden>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </button>
+            <nav class="cabecalho__navegacao" id="menu-principal" aria-label="Menu principal">
+                <a href="./index.html#inicio" th:href="@{/}">Início</a>
+                <a href="./index.html#sobre" th:href="@{/#sobre}">Sobre o AmbMão</a>
+                <a href="./index.html#funcionalidades" th:href="@{/#funcionalidades}">Funcionalidades</a>
+                <a href="./cartilhas.html" th:href="@{/cartilhas}" aria-current="page">Cartilhas</a>
+                <a class="cabecalho__login" href="./login.html" th:href="@{/login}" th:if="${!usuarioAutenticado}">Login do profissional</a>
+                <details class="conta" hidden th:hidden="${false}" th:if="${usuarioAutenticado}">
+                    <summary class="conta__botao">
+                        <span class="conta__avatar" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M5 21v-2a7 7 0 0 1 14 0v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+                        <span class="conta__resumo"><span class="conta__rotulo">Minha conta</span><span class="conta__nome" th:text="${contaProfissional != null ? contaProfissional.nome : 'Profissional'}">Profissional</span></span>
+                        <span class="conta__seta" aria-hidden="true">⌄</span>
+                    </summary>
+                    <div class="conta__painel">
+                        <p class="conta__identidade" th:text="${contaProfissional != null ? contaProfissional.nome : 'Profissional'}">Profissional</p>
+                        <p class="conta__email" th:text="${contaProfissional != null ? contaProfissional.email : ''}"></p>
+                        <a href="./profissional-cartilhas.html" th:href="@{/profissional/cartilhas}">Gerenciar cartilhas</a>
+                        <form class="cabecalho__logout" method="post" action="/logout" th:action="@{/logout}"><button class="cabecalho__sair" type="submit">Sair da conta</button></form>
+                    </div>
+                </details>
+            </nav>
+        </div>
+    </header>
+    <main id="conteudo" class="cartilhas pagina-conteudo">
+        <nav class="caminho" aria-label="Localização"><a href="./index.html" th:href="@{/}">Início</a><span aria-hidden="true">/</span><span aria-current="page">Cartilhas</span></nav>
+        <header class="pagina-titulo">
+            <p class="sobretitulo">Informação para cuidar</p>
+            <h1>Cartilhas educativas</h1>
+            <p>Entenda sua condição e encontre orientações para cuidar das suas mãos e punhos no dia a dia.</p>
+        </header>
+        <form class="busca-cartilhas" role="search" method="get" action="./cartilhas.html" th:action="@{/cartilhas}">
+            <label for="busca-doenca">Qual condição você procura?</label>
+            <div class="busca-cartilhas__campo">
+                <input type="search" id="busca-doenca" name="nomeDoenca" placeholder="Busque pelo nome da doença" th:value="${param.nomeDoenca}" autocomplete="off" aria-controls="lista-cartilhas">
+                <button class="botao botao--primario" type="submit">Buscar</button>
+            </div>
+        </form>
+        <div class="cartilhas__resultado"><p id="resultado-busca" role="status" aria-live="polite">Cartilhas disponíveis</p><button class="link-botao" type="button" id="limpar-busca" hidden>Limpar busca</button></div>
+        <div id="lista-cartilhas" class="cartilhas__lista">
+            <!-- O controller fornece a coleção cartilhas; o JS preenche apenas a prévia. -->
+            <article class="cartilha" data-cartilha th:each="cartilha : ${cartilhas}">
+                <details>
+                    <summary>
+                        <span class="cartilha__marcador" aria-hidden="true">+</span>
+                        <span><span class="cartilha__tipo">Cartilha educativa</span><span class="cartilha__nome" role="heading" aria-level="2" data-field="nomeDoenca" th:text="${cartilha.nomeDoenca}">Nome da condição</span><span class="cartilha__ler">O que é, sintomas e cuidados</span></span>
+                    </summary>
+                    <div class="cartilha__conteudo">
+                        <section><h3>O que é?</h3><p data-field="oQueE" th:text="${cartilha.oQueE}"></p></section>
+                        <section><h3>Sinais e sintomas</h3><ul class="lista-sintomas" data-field="sinaisSintomas" role="list"><li th:each="sintoma : ${cartilha.sinaisSintomasTopicos}" th:text="${sintoma}"></li></ul></section>
+                        <section class="cartilha__orientacoes"><h3>Orientações gerais para o dia a dia</h3><p class="texto-linhas" data-field="orientacoesGerais" th:text="${cartilha.orientacoesGerais}"></p></section>
+                        <p class="cartilha__fonte" data-fonte th:if="${cartilha.fonteUrl != null and !#strings.isEmpty(cartilha.fonteUrl)}">Referência: <a data-field="fonte" href="#" th:href="${cartilha.fonteUrl}" th:text="${cartilha.fonteTitulo}" target="_blank" rel="noopener noreferrer">Fonte do conteúdo</a></p>
+                    </div>
+                </details>
+            </article>
+        </div>
+        <div class="estado-vazio" id="cartilhas-vazio" hidden th:hidden="${!#lists.isEmpty(cartilhas)}"><h2>Nenhuma cartilha encontrada</h2><p>Experimente outro nome ou limpe a busca para consultar todas as cartilhas.</p></div>
+        <aside class="aviso-cuidado"><strong>Cada pessoa tem seu tempo de recuperação.</strong><p>As cartilhas são educativas e não substituem a avaliação da equipe de saúde. Siga as orientações recebidas no seu acompanhamento.</p></aside>
+        <p class="nota-previa" data-somente-previa th:remove="all">Prévia com três cartilhas de exemplo. O conteúdo deve ser revisado pela equipe responsável antes da publicação.</p>
+        <noscript><p data-somente-previa th:remove="all">Ative o JavaScript para visualizar os exemplos desta prévia.</p></noscript>
+    </main>
+    <footer class="rodape">
+        <p>© 2026 Universidade Federal do Triângulo Mineiro.</p>
+    </footer>
+</body>
+</html>

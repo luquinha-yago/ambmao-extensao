@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Conheça o AmbMão: apoio à reabilitação de mãos e punhos para pacientes do SUS acompanhados no Ambulatório Maria da Glória e no HC-UFTM.">
+    <meta name="theme-color" content="#233d89">
+    <link rel="icon" href="./assets/icons/icone_mao.svg" th:href="@{/assets/icons/icone_mao.svg}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css" th:href="@{/css/style.css}">
+    <script src="./js/main.js" th:src="@{/js/main.js}" defer></script>
+    <title>AmbMão | Cuidado para suas mãos e punhos</title>
+</head>
+<body>
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+    <header class="cabecalho">
+        <div class="cabecalho__interior">
+            <a class="cabecalho__titulo-principal" href="#inicio" th:href="@{/}" aria-label="AmbMão — início">
+                <img src="./assets/icons/icone_mao.svg" th:src="@{/assets/icons/icone_mao.svg}" alt="" width="30" height="23">
+                <span>AmbMão</span>
+            </a>
+            <button class="cabecalho__menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal" hidden>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </button>
+            <nav class="cabecalho__navegacao" id="menu-principal" aria-label="Menu principal">
+                <a href="#inicio" th:href="@{/}">Início</a>
+                <a href="#sobre" th:href="@{/#sobre}">Sobre o AmbMão</a>
+                <a href="#funcionalidades" th:href="@{/#funcionalidades}">Funcionalidades</a>
+                <a href="./cartilhas.html" th:href="@{/cartilhas}">Cartilhas</a>
+                <a class="cabecalho__login" href="./login.html" th:href="@{/login}" th:if="${!usuarioAutenticado}">Login do profissional</a>
+                <details class="conta" hidden th:hidden="${false}" th:if="${usuarioAutenticado}">
+                    <summary class="conta__botao">
+                        <span class="conta__avatar" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M5 21v-2a7 7 0 0 1 14 0v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+                        <span class="conta__resumo"><span class="conta__rotulo">Minha conta</span><span class="conta__nome" th:text="${contaProfissional != null ? contaProfissional.nome : 'Profissional'}">Profissional</span></span>
+                        <span class="conta__seta" aria-hidden="true">⌄</span>
+                    </summary>
+                    <div class="conta__painel">
+                        <p class="conta__identidade" th:text="${contaProfissional != null ? contaProfissional.nome : 'Profissional'}">Profissional</p>
+                        <p class="conta__email" th:text="${contaProfissional != null ? contaProfissional.email : ''}"></p>
+                        <a href="./profissional-cartilhas.html" th:href="@{/profissional/cartilhas}">Gerenciar cartilhas</a>
+                        <form class="cabecalho__logout" method="post" action="/logout" th:action="@{/logout}"><button class="cabecalho__sair" type="submit">Sair da conta</button></form>
+                    </div>
+                </details>
+            </nav>
+        </div>
+    </header>
+    <main class="principal" id="conteudo">
+        <section class="principal__hero" id="inicio" aria-labelledby="titulo-principal">
+            <div class="principal__interior">
+                <div class="principal__chamada">
+                    <p class="principal__destaque">Cuidado especializado para suas mãos e punhos</p>
+                    <h1 id="titulo-principal"><span>Recupere</span> seu<br> movimento</h1>
+                    <p class="principal__descricao">Informação e cuidado para apoiar cada etapa da sua reabilitação.</p>
+                    <a class="principal__saiba-mais" href="#sobre" th:href="@{/#sobre}">
+                        <span>Conheça o AmbMão</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+                <div class="principal__grafico" aria-hidden="true">
+                    <div class="principal__orbita principal__orbita--externa"></div>
+                    <div class="principal__orbita principal__orbita--interna"></div>
+                    <div class="principal__simbolo">
+                        <img src="./assets/icons/icone_mao.svg" th:src="@{/assets/icons/icone_mao.svg}" alt="" width="144" height="110">
+                    </div>
+                    <span class="principal__ponto principal__ponto--superior"></span>
+                    <span class="principal__ponto principal__ponto--inferior"></span>
+                    <span class="principal__assinatura">Cuidado que acolhe.<br><strong>Movimento que transforma.</strong></span>
+                </div>
+            </div>
+        </section>
+        <div class="sc">
+            <section class="sc__sobre" id="sobre" aria-labelledby="titulo-sobre">
+                <h2 id="titulo-sobre">Sobre o AmbMão</h2>
+                <p>O AmbMão é uma plataforma dedicada a apoiar a reabilitação de pacientes do SUS acompanhados no Ambulatório Maria da Glória (UFTM) e no HC-UFTM. O nosso objetivo é auxiliar na recuperação de condições clínicas relacionadas ao punho e à mão, oferecendo orientações seguras e acessíveis.</p>
+            </section>
+            <section class="sc__funcionalidades" id="funcionalidades" aria-labelledby="titulo-funcionalidades">
+                <h2 id="titulo-funcionalidades">Funcionalidades</h2>
+                <article class="sc__conteudos-educativos">
+                    <h3>Conteúdos educativos</h3>
+                    <p>Acesse cartilhas explicativas sobre a sua condição, com informações sobre sinais, sintomas e cuidados gerais para o seu dia a dia.</p>
+                    <a class="sc__acessar-cartilhas" href="./cartilhas.html" th:href="@{/cartilhas}">Explorar cartilhas <span aria-hidden="true">→</span></a>
+                </article>
+            </section>
+        </div>
+    </main>
+    <footer class="rodape">
+        <p>© 2026 Universidade Federal do Triângulo Mineiro.</p>
+    </footer>
+</body>
+</html>

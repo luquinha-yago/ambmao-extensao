@@ -1,0 +1,5 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Página indisponível | AmbMão</title><link rel="stylesheet" th:href="@{/css/style.css}" href="/css/style.css"></head>
+<body class="pagina-interna"><main class="pagina-conteudo"><header class="pagina-titulo"><p class="sobretitulo" th:text="${status}">Erro</p><h1>Página indisponível</h1><p th:text="${status == 404 ? 'Não encontramos esta página ou cartilha.' : 'Não foi possível concluir esta solicitação. Tente novamente.'}">Não foi possível concluir esta solicitação.</p></header><a class="botao botao--primario" th:href="@{/cartilhas}" href="/cartilhas">Voltar para as cartilhas</a></main></body>
+</html>

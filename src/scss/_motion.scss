@@ -1,0 +1,94 @@
+// Entradas curtas e ilustração suave; o conteúdo permanece visível sem animação.
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes abrir-conteudo {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flutuar-mao {
+    0%, 100% { transform: translate(-50%, -50%) rotate(-8deg); }
+    50% { transform: translate(-50%, calc(-50% - 8px)) rotate(-4deg); }
+}
+
+@keyframes respirar-orbita {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.035); }
+}
+
+@keyframes flutuar-ponto {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .principal__simbolo { animation: flutuar-mao 6s ease-in-out infinite; }
+    .principal__orbita { animation: respirar-orbita 8s ease-in-out infinite; }
+    .principal__orbita--interna { animation-delay: -4s; }
+    .principal__ponto { animation: flutuar-ponto 5s ease-in-out infinite; }
+    .principal__ponto--inferior { animation-duration: 7s; animation-delay: -2s; }
+
+    .principal__chamada > *,
+    .principal__grafico,
+    .sc__sobre,
+    .sc__funcionalidades,
+    .pagina-titulo,
+    .busca-cartilhas,
+    .painel-acesso,
+    .form-cartilha,
+    .cartilha,
+    .gerenciamento-item,
+    .mensagem {
+        animation: aparecer 420ms ease-out backwards;
+    }
+
+    .principal__chamada > :nth-child(2) { animation-delay: 60ms; }
+    .principal__chamada > :nth-child(3) { animation-delay: 120ms; }
+    .principal__chamada > :nth-child(4),
+    .principal__grafico { animation-delay: 180ms; }
+    .busca-cartilhas { animation-delay: 60ms; }
+    .cartilha:nth-child(2), .gerenciamento-item:nth-child(2) { animation-delay: 60ms; }
+    .cartilha:nth-child(3), .gerenciamento-item:nth-child(3) { animation-delay: 120ms; }
+
+    .botao,
+    .principal__saiba-mais,
+    .cabecalho__navegacao a,
+    .cabecalho__menu,
+    .cabecalho__sair {
+        transition: background-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+
+    .botao:active:not(:disabled),
+    .principal__saiba-mais:active { transform: translateY(1px); }
+
+    .cartilha,
+    .gerenciamento-item,
+    .sc__conteudos-educativos {
+        transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .cartilha summary { transition: background-color 180ms ease; }
+    .cartilha__marcador { transition: transform 200ms ease; }
+    .cartilha details[open] .cartilha__marcador { transform: rotate(45deg); }
+    .cartilha details[open] .cartilha__conteudo { animation: abrir-conteudo 220ms ease-out; }
+
+    .busca-cartilhas input,
+    .campo input,
+    .campo textarea { transition: border-color 180ms ease, box-shadow 180ms ease; }
+
+    .busca-cartilhas input:focus,
+    .campo input:focus,
+    .campo textarea:focus { box-shadow: 0 0 0 3px #233d8912; }
+
+    @media (hover: hover) {
+        .botao:hover:not(:disabled),
+        .principal__saiba-mais:hover { transform: translateY(-2px); box-shadow: 0 4px 12px #15254f18; }
+
+        .cartilha:hover,
+        .gerenciamento-item:hover,
+        .sc__conteudos-educativos:hover { border-color: #b6c8e5; box-shadow: 0 4px 16px #15254f0a; }
+    }
+}

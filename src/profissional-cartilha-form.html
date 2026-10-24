@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulário de cadastro e edição das cartilhas do AmbMão.">
+    <meta name="theme-color" content="#233d89">
+    <link rel="icon" href="./assets/icons/icone_mao.svg" th:href="@{/assets/icons/icone_mao.svg}" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css" th:href="@{/css/style.css}">
+    <script src="./js/main.js" th:src="@{/js/main.js}" defer></script>
+    <title>Editar cartilha | AmbMão</title>
+    <script src="./js/cartilhas-dados.js" th:remove="all" defer></script>
+    <script src="./js/cartilhas-utils.js" th:src="@{/js/cartilhas-utils.js}" defer></script>
+    <script src="./js/cartilhas.js" th:src="@{/js/cartilhas.js}" defer></script>
+</head>
+<body class="pagina-interna" data-preview="true" th:attr="data-preview=${false}">
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+    <header class="cabecalho">
+        <div class="cabecalho__interior">
+            <a class="cabecalho__titulo-principal" href="./index.html#inicio" th:href="@{/}" aria-label="AmbMão — início">
+                <img src="./assets/icons/icone_mao.svg" th:src="@{/assets/icons/icone_mao.svg}" alt="" width="30" height="23">
+                <span>AmbMão</span>
+            </a>
+            <button class="cabecalho__menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-principal" hidden>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </button>
+            <nav class="cabecalho__navegacao" id="menu-principal" aria-label="Menu principal">
+                <a href="./index.html#inicio" th:href="@{/}">Início</a>
+                <a href="./index.html#sobre" th:href="@{/#sobre}">Sobre o AmbMão</a>
+                <a href="./index.html#funcionalidades" th:href="@{/#funcionalidades}">Funcionalidades</a>
+                <a href="./cartilhas.html" th:href="@{/cartilhas}">Cartilhas</a>
+                <a class="cabecalho__login" href="./login.html" th:href="@{/login}" th:if="${!usuarioAutenticado}">Login do profissional</a>
+                <details class="conta" hidden th:hidden="${false}" th:if="${usuarioAutenticado}">
+                    <summary class="conta__botao">
+                        <span class="conta__avatar" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.7"/><path d="M5 21v-2a7 7 0 0 1 14 0v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+                        <span class="conta__resumo"><span class="conta__rotulo">Minha conta</span><span class="conta__nome" th:text="${contaProfissional != null ? contaProfissional.nome : 'Profissional'}">Profissional</span></span>
+                        <span class="conta__seta" aria-hidden="true">⌄</span>
+                    </summary>
+                    <div class="conta__painel">
+                        <p class="conta__identidade" th:text="${contaProfissional != null ? contaProfissional.nome : 'Profissional'}">Profissional</p>
+                        <p class="conta__email" th:text="${contaProfissional != null ? contaProfissional.email : ''}"></p>
+                        <a href="./profissional-cartilhas.html" th:href="@{/profissional/cartilhas}">Gerenciar cartilhas</a>
+                        <form class="cabecalho__logout" method="post" action="/logout" th:action="@{/logout}"><button class="cabecalho__sair" type="submit">Sair da conta</button></form>
+                    </div>
+                </details>
+            </nav>
+        </div>
+    </header>
+    <main id="conteudo" class="pagina-conteudo editor">
+        <p class="nota-previa" data-somente-previa th:remove="all">Demonstração: você pode preencher e visualizar a cartilha. As alterações não serão salvas.</p>
+        <a class="voltar" href="./profissional-cartilhas.html" th:href="@{/profissional/cartilhas}">← Voltar para o gerenciamento</a>
+        <header class="pagina-titulo"><p class="sobretitulo">Área do profissional</p><h1 id="titulo-editor" th:text="${codigo == null ? 'Nova cartilha' : 'Editar cartilha'}">Nova cartilha</h1><p>Use uma linguagem simples e orientações claras para o dia a dia dos pacientes.</p></header>
+        <form id="form-cartilha" class="form-cartilha" method="post" action="/profissional/cartilhas" th:action="${codigo == null} ? @{/profissional/cartilhas} : @{/profissional/cartilhas/{codigo}(codigo=${codigo})}" th:object="${cartilhaForm}">
+            <input type="hidden" name="_method" value="POST" th:value="${codigo == null ? 'POST' : 'PUT'}">
+            <div class="mensagem mensagem--erro" role="alert" th:if="${#fields.hasAnyErrors()}" hidden th:hidden="${!#fields.hasAnyErrors()}"><p>Confira os campos indicados antes de salvar.</p><ul><li th:each="erro : ${#fields.allErrors()}" th:text="${erro}"></li></ul></div>
+            <div class="campo"><label for="nomeDoenca">Nome da doença <span>(obrigatório)</span></label><input id="nomeDoenca" name="nomeDoenca" type="text" maxlength="160" th:field="*{nomeDoenca}" required><p class="campo__erro" th:errors="*{nomeDoenca}"></p></div>
+            <div class="campo"><label for="oQueE">O que é? <span>(obrigatório)</span></label><p id="ajuda-oque" class="campo__ajuda">Explique a condição de forma acessível.</p><textarea id="oQueE" name="oQueE" rows="4" maxlength="5000" aria-describedby="ajuda-oque" th:field="*{oQueE}" required></textarea><p class="campo__erro" th:errors="*{oQueE}"></p></div>
+            <div class="campo"><label for="sinaisSintomas">Sinais e sintomas <span>(obrigatório)</span></label><p id="ajuda-sinais" class="campo__ajuda">Escreva um sinal ou sintoma por linha. Cada linha aparecerá como um tópico com bolinha.</p><textarea id="sinaisSintomas" name="sinaisSintomas" rows="5" maxlength="5000" aria-describedby="ajuda-sinais" th:field="*{sinaisSintomas}" required></textarea><p class="campo__erro" th:errors="*{sinaisSintomas}"></p></div>
+            <div class="campo"><label for="orientacoesGerais">Orientações gerais para o dia a dia <span>(obrigatório)</span></label><p id="ajuda-orientacoes" class="campo__ajuda">Escreva uma orientação por linha, respeitando a avaliação individual do paciente.</p><textarea id="orientacoesGerais" name="orientacoesGerais" rows="6" maxlength="10000" aria-describedby="ajuda-orientacoes" th:field="*{orientacoesGerais}" required></textarea><p class="campo__erro" th:errors="*{orientacoesGerais}"></p></div>
+            <fieldset class="form-cartilha__referencia"><legend>Referência do conteúdo <span>(opcional)</span></legend><div class="campo"><label for="fonteTitulo">Nome da fonte</label><input id="fonteTitulo" name="fonteTitulo" maxlength="200" th:field="*{fonteTitulo}"></div><div class="campo"><label for="fonteUrl">Link da fonte</label><input id="fonteUrl" name="fonteUrl" type="url" maxlength="2000" placeholder="https://" th:field="*{fonteUrl}"><p class="campo__erro" th:errors="*{fonteUrl}"></p></div></fieldset>
+            <p class="campo__ajuda">Ao salvar, esta cartilha ficará disponível para leitura na página pública.</p>
+            <div class="form-cartilha__acoes"><button class="botao botao--primario" id="salvar-cartilha" type="submit" disabled data-habilitar-servidor th:disabled="${false}">Salvar cartilha</button><button class="botao botao--secundario" id="visualizar-cartilha" type="button" data-somente-previa th:remove="all">Visualizar cartilha</button><a class="link-botao" href="./profissional-cartilhas.html" th:href="@{/profissional/cartilhas}">Cancelar</a></div>
+            <p class="mensagem" id="editor-status" role="status" hidden></p>
+        </form>
+        <section id="previa-cartilha" class="previa-cartilha" hidden data-somente-previa th:remove="all" aria-labelledby="titulo-previa" tabindex="-1"><p class="sobretitulo">Prévia da cartilha · não salva</p><h2 id="titulo-previa" data-field="nomeDoenca"></h2><h3>O que é?</h3><p data-field="oQueE"></p><h3>Sinais e sintomas</h3><ul class="lista-sintomas" data-field="sinaisSintomas" role="list"></ul><h3>Orientações gerais para o dia a dia</h3><p class="texto-linhas" data-field="orientacoesGerais"></p><p class="cartilha__fonte" data-fonte>Referência: <a data-field="fonte" target="_blank" rel="noopener noreferrer"></a></p></section>
+    </main>
+    <footer class="rodape">
+        <p>© 2026 Universidade Federal do Triângulo Mineiro.</p>
+    </footer>
+</body>
+</html>

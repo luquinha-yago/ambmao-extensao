@@ -1,0 +1,147 @@
+@use "../abstracts/variables" as v;
+
+.principal {
+    &__hero {
+        overflow: hidden;
+        background: linear-gradient(125deg, #f7faff 5%, #e8f0fd 65%, #dae9fe);
+        border-bottom: 1px solid #dce5f4;
+    }
+    &__interior {
+        display: grid;
+        gap: 4rem;
+        max-width: 120rem;
+        margin-inline: auto;
+        padding: 5.6rem 2.8rem 3.6rem;
+    }
+    &__chamada { align-self: center; min-width: 0; }
+    &__destaque {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        max-width: 31rem;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        font-weight: 600;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: v.$cor-primaria;
+        &::before {
+            content: "";
+            flex: 0 0 2.4rem;
+            height: .2rem;
+            margin-top: .8rem;
+            background: v.$cor-primaria;
+        }
+    }
+    &__chamada h1 {
+        margin-bottom: 2rem;
+        font-size: clamp(3.2rem, 8.7vw, 5.2rem);
+        font-weight: 800;
+        line-height: 1.12;
+        letter-spacing: -.045em;
+        color: #15254f;
+        span { color: v.$cor-primaria; }
+    }
+    &__descricao {
+        max-width: 34rem;
+        margin-bottom: 2.8rem;
+        font-size: 1.5rem;
+        line-height: 1.7;
+        color: #53627c;
+    }
+    &__saiba-mais {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1.6rem;
+        min-height: 5rem;
+        padding: 1.4rem 2rem;
+        border-radius: .8rem;
+        background: v.$cor-primaria;
+        color: v.$cor-branco;
+        font-size: 1.3rem;
+        font-weight: 600;
+        transition: background-color .2s;
+        &:hover { background: #182e6e; }
+    }
+    &__grafico {
+        position: relative;
+        isolation: isolate;
+        display: grid;
+        place-items: center;
+        width: 100%;
+        max-width: 38rem;
+        aspect-ratio: 1.15;
+        margin-inline: auto;
+        overflow: hidden;
+        border-radius: 8rem 2rem 8rem 2rem;
+        background: linear-gradient(145deg, #2f509e, #182e6e);
+    }
+    &__orbita {
+        position: absolute;
+        left: 50%;
+        top: 42%;
+        transform: translate(-50%, -50%);
+        border: 1px solid #ffffff26;
+        border-radius: 50%;
+        aspect-ratio: 1;
+        &--externa { width: 100%; }
+        &--interna { width: 76%; }
+    }
+    &__simbolo {
+        position: absolute;
+        top: 42%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-8deg);
+        display: grid;
+        place-items: center;
+        width: 46%;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: #edf4ff;
+        box-shadow: 0 1.6rem 4rem #0c1e4b33;
+        img { width: 65%; height: auto; }
+    }
+    &__ponto {
+        position: absolute;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        background: #b6d3fb;
+        &--superior { left: 26%; top: 13%; }
+        &--inferior { right: 18%; bottom: 32%; width: 1.6rem; height: 1.6rem; }
+    }
+    &__assinatura {
+        position: absolute;
+        bottom: 10%;
+        padding-inline: 1.6rem;
+        color: #e1ebff;
+        text-align: center;
+        font-size: 1.2rem;
+        line-height: 1.7;
+        strong { font-weight: 600; }
+    }
+}
+
+@media (min-width: 768px) {
+    .principal {
+        &__interior {
+            grid-template-columns: 1.2fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            min-height: 58rem;
+            padding: 7.2rem 4rem;
+        }
+        &__destaque { font-size: 1.2rem; max-width: 36rem; }
+        &__chamada h1 { font-size: clamp(3.8rem, 4.8vw, 6.8rem); }
+        &__descricao { font-size: 1.6rem; max-width: 39rem; }
+        &__grafico { aspect-ratio: .88; max-width: 43rem; border-radius: 12rem 2.4rem 12rem 2.4rem; }
+        &__assinatura { font-size: 1.4rem; bottom: 13%; }
+        &__saiba-mais { font-size: 1.4rem; padding-inline: 2.4rem; }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .principal__saiba-mais { transition: none; }
+}

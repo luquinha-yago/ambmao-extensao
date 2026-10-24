@@ -1,0 +1,36 @@
+# Credenciais e configuração local (em qualquer pasta)
+.env
+.env.*
+!.env.example
+.envrc
+/.aws/
+/.codex/
+
+# Dependências, builds e caches
+node_modules/
+target/
+/build/
+.m2/
+.sass-cache/
+.cache/
+*.css.map
+
+# Logs e arquivos temporários
+*.log
+*.pid
+*.pid.lock
+*.tmp
+*.swp
+*.swo
+*~
+hs_err_pid*
+replay_pid*
+/core
+/core.*
+
+# Configuração de IDE e arquivos do sistema
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
