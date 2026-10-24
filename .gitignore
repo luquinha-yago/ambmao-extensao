@@ -34,3 +34,21 @@ replay_pid*
 *.iml
 .DS_Store
 Thumbs.db
+
+# Configurações da estrutura Java inicial
+HELP.md
+.mvn/wrapper/maven-wrapper.jar
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+*.iws
+*.ipr
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/

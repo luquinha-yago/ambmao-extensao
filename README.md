@@ -97,3 +97,13 @@ git diff --cached --stat
 Se um `.env` já estiver sendo rastreado, o `.gitignore` não o remove do índice. Nesse caso, use `git rm --cached backend/.env` para mantê-lo apenas no computador.
 
 Veja também a [configuração detalhada do backend](backend/README.md) e a [integração com Spring e Thymeleaf](docs/INTEGRACAO-SPRING.md).
+
+## Colaboração
+
+Consulte o [guia de Git e GitHub](GUIA_GIT.md) para o fluxo de contribuição. A aplicação atual é executada a partir de `backend/`; os arquivos Maven e Java na raiz, preservados do histórico remoto, pertencem à estrutura inicial.
+
+## Equipe
+
+- Brenda Luiza
+- João Pedro Amaral Souto
+- Lucas Yago dos Santos Paula
