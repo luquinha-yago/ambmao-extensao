@@ -98,6 +98,25 @@ Se um `.env` já estiver sendo rastreado, o `.gitignore` não o remove do índic
 
 Veja também a [configuração detalhada do backend](backend/README.md) e a [integração com Spring e Thymeleaf](docs/INTEGRACAO-SPRING.md).
 
+## Hospedagem no Render
+
+O `Dockerfile` compila o front e empacota a aplicação de `backend/` com Java 26. O `render.yaml` define um serviço web gratuito com o perfil `prod`, HTTPS no proxy e verificação da página inicial.
+
+No Render, crie um **Blueprint**, conecte este repositório e selecione a branch `main`. Informe `SUPABASE_DB_URL`, `SUPABASE_DB_USERNAME` e `SUPABASE_DB_PASSWORD` quando solicitado. Use o Session pooler do Supabase na porta 5432 e `sslmode=require` na URL JDBC. As credenciais ficam no painel da hospedagem; não envie o `.env` ao GitHub.
+
+Se o profissional já existe no banco, o login continua funcionando. Em um banco novo, configure temporariamente as variáveis `AMBMAO_PROFISSIONAL_NOME`, `AMBMAO_PROFISSIONAL_EMAIL` e `AMBMAO_PROFISSIONAL_SENHA` para provisionar a primeira conta, conforme o README do backend.
+
+O serviço gratuito suspende após 15 minutos sem acesso e pode demorar a responder na próxima visita. Consulte os limites e preços atuais no Render antes de escolher um plano pago. Depois do deploy, confira a página inicial, a busca e o login pela URL pública.
+
+Para verificar a imagem localmente:
+
+```bash
+docker build -t ambmao .
+docker run --rm -p 8080:8080 --env-file backend/.env -e SPRING_PROFILES_ACTIVE=prod ambmao
+```
+
+O perfil `prod` exige HTTPS para os cookies de sessão; para testar o login por HTTP local, substitua `-e SPRING_PROFILES_ACTIVE=prod` por `-e SPRING_PROFILES_ACTIVE=default -e SESSION_COOKIE_SECURE=false`.
+
 ## Colaboração
 
 Consulte o [guia de Git e GitHub](GUIA_GIT.md) para o fluxo de contribuição. A aplicação atual é executada a partir de `backend/`; os arquivos Maven e Java na raiz, preservados do histórico remoto, pertencem à estrutura inicial.
